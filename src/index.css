@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-gold: #D97706;
+  --color-brand-goldHover: #B45309;
+  --color-brand-emerald: #064E3B;
+  --color-brand-lightEmerald: #047857;
+  --color-brand-sand: #FDFBF7;
+  --color-brand-earth: #292524;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass-nav {
+    background: rgba(6, 78, 59, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .hero-bg {
+    background-image: linear-gradient(rgba(6, 78, 59, 0.55), rgba(15, 23, 42, 0.75)), url('https://unsplash.com/photos/6SgfEwkA02Y/download?force=true');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
