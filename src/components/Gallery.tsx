@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'motion/react';
 
 // Example images for the gallery
 const galleryImages = [
-  "/IMG_3118.JPG",
-  "/IMG_3123.JPG",
-  "/IMG_6605.jpeg",
-  "/IMG_6051.jpeg",
-  "/IMG_6089.jpeg",
-  "/IMG_6244.jpeg"
+  "./IMG_3118.JPG",
+  "./IMG_3123.JPG",
+  "./IMG_6605.jpeg",
+  "./IMG_6051.jpeg",
+  "./IMG_6089.jpeg",
+  "./IMG_6244.jpeg"
 ];
 
 export default function Gallery() {
