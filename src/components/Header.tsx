@@ -34,7 +34,6 @@ export default function Header({ onNavigateToCategory }: HeaderProps) {
           </div>
           <div className="flex flex-col">
             <span className="font-serif text-2xl font-bold tracking-wide text-amber-100">SAGE ETHIOPIA TOUR</span>
-            <span className="text-[10px] tracking-widest text-amber-300 uppercase font-medium">Ethiopia Voyages</span>
           </div>
         </a>
 

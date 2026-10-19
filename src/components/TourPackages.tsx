@@ -138,13 +138,16 @@ export default function TourPackages({ tours, activeCategory, onCategoryChange }
               </div>
               <div className="p-5 flex-grow flex flex-col justify-between">
                 <div>
-                  {tour.id !== 1 && (
-                    <div className="flex items-center text-xs text-gray-500 mb-3 space-x-4">
+                  <div className="flex items-center text-xs text-gray-500 mb-3 space-x-4">
+                    {tour.durationLabel && (
                       <span className="flex items-center"><i className="fa-regular fa-clock text-brand-gold mr-1"></i> {tour.durationLabel}</span>
-                      <span className="flex items-center"><i className="fa-solid fa-location-dot text-brand-gold mr-1"></i> {tour.destination}</span>
-                    </div>
-                  )}
-                  <p className={`text-gray-600 text-sm leading-relaxed ${tour.id === 1 ? 'line-clamp-6 text-gray-700' : 'mb-4 line-clamp-3'}`}>
+                    )}
+                    <span className="flex items-center"><i className="fa-solid fa-location-dot text-brand-gold mr-1"></i> {tour.destination}</span>
+                  </div>
+                  <p 
+                    style={{ fontSize: '16px', fontWeight: 'normal' }}
+                    className={`text-gray-600 text-base font-normal leading-relaxed ${tour.category === 'festival' || tour.id === 1 ? 'line-clamp-6 text-gray-700' : 'mb-4 line-clamp-3'}`}
+                  >
                     {tour.description}
                   </p>
                 </div>
@@ -152,7 +155,7 @@ export default function TourPackages({ tours, activeCategory, onCategoryChange }
                   onClick={() => setSelectedTour(tour)}
                   className="w-full mt-auto bg-brand-sand border border-brand-gold text-brand-goldHover hover:bg-brand-gold hover:text-white py-2 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
-                  {tour.id === 1 ? 'Read More' : 'View Itinerary'} <i className="fa-solid fa-arrow-right text-xs"></i>
+                  {tour.category === 'festival' || tour.id === 1 ? 'Read More' : 'View Itinerary'} <i className="fa-solid fa-arrow-right text-xs"></i>
                 </button>
               </div>
             </div>
@@ -205,9 +208,11 @@ export default function TourPackages({ tours, activeCategory, onCategoryChange }
               <h3 className="font-serif text-3xl font-bold text-gray-900 mb-4">{selectedTour.title}</h3>
               
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6 pb-6 border-b border-gray-100">
-                <span className="flex items-center bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                  <i className="fa-regular fa-clock text-brand-gold mr-2"></i> {selectedTour.durationLabel}
-                </span>
+                {selectedTour.durationLabel && (
+                  <span className="flex items-center bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
+                    <i className="fa-regular fa-clock text-brand-gold mr-2"></i> {selectedTour.durationLabel}
+                  </span>
+                )}
                 <span className="flex items-center bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
                   <i className="fa-solid fa-location-dot text-brand-gold mr-2"></i> {selectedTour.destination}
                 </span>

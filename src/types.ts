@@ -20,4 +20,7 @@ export interface Attraction {
   highlights?: string[];
   bestTimeToVisit?: string;
   location?: string;
+  lat?: number;
+  lng?: number;
+  region?: string;
 }

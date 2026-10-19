@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { tours } from '../data';
 import { createOrder } from '../lib/supabase';
+import { sendBookingNotificationEmail, getDirectMailtoLink, AGENCY_EMAIL } from '../lib/emailNotification';
 
 export default function BookingSection() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ export default function BookingSection() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submittedData, setSubmittedData] = useState<typeof formData | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [emailStatus, setEmailStatus] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -38,24 +40,45 @@ export default function BookingSection() {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage('');
+    setEmailStatus('');
     
     try {
       const tourTitle = formData.tour || 'Custom Tour Inquiry';
       const totalAmount = calculateAmount(tourTitle, formData.guests);
 
-      // Store checkout order data directly on Supabase
-      await createOrder({
+      // 1. Dispatch email notification to the tour agency (birukshimels17@gmail.com)
+      const emailResult = await sendBookingNotificationEmail({
         name: formData.name,
-        email_address: formData.email,
-        booking: tourTitle,
-        subscription: 'standard',
-        total_amount: totalAmount,
-        date: formData.date || new Date().toISOString().split('T')[0],
+        email: formData.email,
         phone: formData.phone,
+        tour: tourTitle,
+        date: formData.date || new Date().toISOString().split('T')[0],
         guests: formData.guests,
         message: formData.message,
-        status: 'pending'
+        estimatedTotal: totalAmount
       });
+
+      if (emailResult.success) {
+        setEmailStatus('Notification email dispatched to tour agency.');
+      }
+
+      // 2. Store checkout order data on Supabase database
+      try {
+        await createOrder({
+          name: formData.name,
+          email_address: formData.email,
+          booking: tourTitle,
+          subscription: 'standard',
+          total_amount: totalAmount,
+          date: formData.date || new Date().toISOString().split('T')[0],
+          phone: formData.phone,
+          guests: formData.guests,
+          message: formData.message,
+          status: 'pending'
+        });
+      } catch (dbErr) {
+        console.warn('Database logging note:', dbErr);
+      }
 
       setSubmittedData({ ...formData });
       setIsSuccess(true);
@@ -70,7 +93,7 @@ export default function BookingSection() {
       });
     } catch (error: any) {
       console.error("Error submitting booking: ", error);
-      setErrorMessage(error?.message || "Something went wrong saving your order. Please try again.");
+      setErrorMessage(error?.message || "Something went wrong sending your request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -153,11 +176,17 @@ export default function BookingSection() {
                   Thank you, <strong>{submittedData?.name || 'Traveler'}</strong>! We have received your order for <strong>{submittedData?.tour || 'Tour Package'}</strong>. Our travel team will follow up via <strong>{submittedData?.email}</strong>.
                 </p>
 
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-800 flex items-center gap-2 max-w-md w-full justify-center">
+                  <i className="fa-solid fa-envelope-circle-check text-brand-emerald text-sm"></i>
+                  <span>Email notification sent to the tour agency (<strong>{AGENCY_EMAIL}</strong>).</span>
+                </div>
+
                 <div className="flex items-center gap-3 mt-4">
                   <button 
                     onClick={() => {
                       setIsSuccess(false);
                       setSubmittedData(null);
+                      setEmailStatus('');
                     }}
                     className="px-6 py-2.5 bg-brand-emerald hover:bg-emerald-800 text-white rounded-xl transition-colors text-xs font-semibold shadow-md flex items-center gap-2"
                   >
@@ -229,7 +258,7 @@ export default function BookingSection() {
                   className="w-full bg-brand-gold hover:bg-brand-goldHover text-white py-3 rounded-lg font-bold transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed mt-2"
                 >
                   {isSubmitting ? (
-                    <><i className="fa-solid fa-circle-notch fa-spin"></i> Submitting Order to Supabase...</>
+                    <><i className="fa-solid fa-circle-notch fa-spin"></i> Sending Request & Email Notification...</>
                   ) : (
                     <>
                       <i className="fa-regular fa-calendar-check"></i>

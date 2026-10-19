@@ -104,7 +104,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-gray-400">
               <li className="flex items-start">
                 <i className="fa-solid fa-location-dot text-brand-gold mt-1 mr-3 w-4 text-center"></i>
-                <span>Bole Road, Snap Plaza 4th Floor<br />Addis Ababa, Ethiopia</span>
+                <span>Bole Road<br />Addis Ababa, Ethiopia</span>
               </li>
               <li className="flex items-center">
                 <i className="fa-brands fa-whatsapp text-green-400 mr-3 w-4 text-center text-base"></i>

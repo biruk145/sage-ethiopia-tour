@@ -1,4 +1,6 @@
 import { Tour, Attraction } from './types';
+import timketImage from './assets/images/timket_epiphany_gondar_1790687161286.jpg';
+import hararImage from './assets/images/harar_cultural_tour_1790688037336.jpg';
 
 export const tours: Tour[] = [
   {
@@ -13,7 +15,7 @@ export const tours: Tour[] = [
     description: "\"Ashenda\" refers to the tall green grass that girls collect from riverbanks and tuck into their waistbands or wear as skirts. Girls gather in groups, play small drums, and go from house to house singing, dancing, and receiving gifts or tokens of appreciation from community members. The festival creates a unique public space where young women enjoy exceptional freedom, joy, and visibility, and are deeply respected and protected by the community."
   },
   {
-    id: 14,
+    id: 15,
     title: "Genna",
     category: "festival",
     duration: "1",
@@ -24,13 +26,24 @@ export const tours: Tour[] = [
     description: "After 43 days of fasting (known as the advent or Tsome Gahad), Ethiopians celebrate their Christmas. The Genna festivity starts in the early morning (6:00 a.m.) with people gathering in churches for the mass service culminating in a spectacular procession of the Tabot (a replica of the Ark of the Covenant) carried on the top of the priest’s head. After this ceremony, people gather at home with their relatives to feast and break their fast with typical Ethiopian food such as Doro Wat, a spicy chicken stew served with injera. Injera is a sourdough pancake-like bread and a staple food in Ethiopia. A typical local drink for Genna celebration is tej, made from honey or tell barley.. One of the most popular places to witness this holiday is Lalibela, which receives pilgrims from all over the country who gather to chant and pray around the famous rock-hewn churches during the night."
   },
   {
+    id: 16,
+    title: "Timket (Ethiopian Epiphany)",
+    category: "festival",
+    duration: "3-5",
+    durationLabel: "",
+    destination: "Gondar, Lalibela & Addis Ababa",
+    price: "",
+    image: timketImage,
+    description: "Timket (Ethiopian Epiphany) is Ethiopia's most vibrant and celebrated religious festival, recognized by UNESCO as Intangible Cultural Heritage of Humanity. Commemorating the baptism of Jesus Christ in the River Jordan by John the Baptist, the celebration unfolds over three unforgettable days.\n\n• The Eve of Timket (Ketera): Sacred replicas of the Ark of the Covenant (Tabots) are carried out of local churches wrapped in rich silks and velvets, borne on the heads of priests under embroidered ceremonial velvet umbrellas, escorted by thousands of singing, clapping worshippers in pristine white cotton Habesha Kemis.\n• The Main Baptism Ceremony: At dawn, holy water is blessed in sacred pools (such as the historic 17th-century Fasilides' Bath in Gondar) followed by the joyous blessing and spraying of the crowd, re-enacting Christ's baptism amidst rhythmic drumming, silver sistra chants, and vibrant liturgical dances.\n• Procession & Celebration: Priests and deacons lead jubilant street processions accompanied by traditional trumpet blasts, hymn singing, and joyful communal feasts of injera, doro wat, and honey wine (tej)."
+  },
+  {
     id: 2,
     title: "Danakil Depression Expedition",
     category: "adventure",
     duration: "3-5",
     durationLabel: "4 Days",
     destination: "Danakil, Erta Ale",
-    price: "$650",
+    price: "$1,550",
     image: "https://unsplash.com/photos/E0gtyLcD4NE/download?force=true",
      /**/
   
@@ -43,7 +56,7 @@ export const tours: Tour[] = [
     duration: "7+",
     durationLabel: "7 Days",
     destination: "Simien Mountains",
-    price: "$950",
+    price: "$2,200",
     image: "https://unsplash.com/photos/eRFC0_U0hGE/download?force=true",
     description: "Trek the breathtaking Simien Mountains, home to dramatic escarpments, deep valleys, and endemic wildlife like the Gelada baboon."
   },
@@ -68,6 +81,17 @@ export const tours: Tour[] = [
     price: "$1,450",
     image: "https://unsplash.com/photos/BCyWIZwGB38/download?force=true",
     description: "Immerse yourself in the diverse indigenous cultures of the Omo Valley, visiting various tribes and experiencing their unique traditions."
+  },
+  {
+    id: 17,
+    title: "Harar Jugol Walled City & Hyena Feeding Cultural Tour",
+    category: "cultural",
+    duration: "3-5",
+    durationLabel: "4 Days",
+    destination: "Harar Jugol, Eastern Ethiopia",
+    price: "$850",
+    image: hararImage,
+    description: "Step into the fortified historic town of Harar Jugol, recognized by UNESCO as the fourth holiest city of Islam. Wander through vibrant pastel-colored alleyways, visit traditional Harari cultural houses (Gegar), bustling spice markets, Arthur Rimbaud's museum, and witness the legendary dusk tradition of the local Hyena Men hand-feeding wild hyenas."
   },
   {
     id: 6,
@@ -96,11 +120,11 @@ export const tours: Tour[] = [
     title: "Addis Ababa Full Day City Tour",
     category: "fullday",
     duration: "1",
-    durationLabel: "Full Day",
+    durationLabel: "6-7 hours",
     destination: "Addis Ababa",
-    price: "$150",
-    image: "https://images.unsplash.com/photo-1647316703389-e114712500e5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGFkZGlzJTIwYWJhYmElMjBjaXR5JTIwdG91cnxlbnwwfHwwfHx8MA%3D%3D",
-    description: "Sage Ethiopia Tours offers a full day city tour, to visit the main attractions of Addis Ababa. We start with a visit to the Entoto Mountain, where the city was first established, the Ethnographic Museum, the perfect introduction to the Ethiopian culture and lifestyles, located inside the main campus of Addis Ababa University, in Sidist Kilo. The building that hosts this museum was once Emperor Haile Selassie’s palace. After a lunch break in Taitu Hotel, the oldest hotel in Addis Ababa, we will have a delicious Ethiopian coffee at Tomoca, the oldest and first coffee roasting business in Ethiopia. Finally, the tour ends with a stop in Merkato, the largest open market in Africa, where you can find all kinds of goods."
+    price: "$130 per person",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Addis_in_night.jpg/1280px-Addis_in_night.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    description: "Holy Trinity Cathedral (Kidist Selassie) stands as one of the most significant Orthodox cathedrals in Ethiopia, featuring baroque architectural elements and a distinctive copper dome.\n\n• Imperial History: Serves as the final resting place of Emperor Haile Selassie I and Empress Menen Asfaw, housed in grand granite tombs.\n• Artistic Heritage: The interior walls feature large stained-glass windows depicting biblical passages and major events in Ethiopian church history.\n• Visitor Guidelines: Modest attire is required; women should bring a scarf or shawl for head covering, and shoes are removed prior to entering the main sanctuary.\n\nNational Museum of Ethiopia houses the country's paramount historical, ethnographic, and paleontological collections.\n• Fossil Relics: The basement gallery displays the original fossilized remains of \"Lucy\" (Dinkinesh), a 3.2-million-year-old hominid skeleton discovered in the Afar region.\n• Royal & Cultural Artifacts: Upper floors feature imperial crowns, ceremonial robes, traditional musical instruments, and fine art pieces spanning early Aksumite artifacts to modern paintings.\n\nEthiopian Cultural Restaurant offers an authentic culinary introduction to Ethiopian gastronomy in a traditional thatched-roof setting.\n• Traditional Dining: Guests share a platter of Injera topped with varied meat and vegetarian stews (Beyaynetu or Kitfo).\n• Cultural Experience: Includes a live demonstration of the traditional Ethiopian coffee ceremony (Buna) accompanied by fresh frankincense.\n\nShiro Meda Traditional Cloth Market is located along the lower slopes of Mount Entoto and serves as the primary hub for handwoven Ethiopian textiles.\n• Artisanal Garments: Features rows of local vendors and weavers crafting traditional white cotton dresses (Habesha Kemis), colorful shawls (Netela), and embroidered linens.\n• Shopping Experience: Direct interaction with weavers makes it an ideal spot for purchasing authentic souvenirs and custom-fitted garments."
   },
   {
     id: 8,
@@ -142,7 +166,7 @@ export const tours: Tour[] = [
     duration: "3-5",
     durationLabel: "4 Days",
     destination: "Danakil, Erta Ale",
-    price: "$650",
+    price: "$1,550",
     image: "https://visitethiopia.et/uploads/0000/152/2025/05/26/erta-ale-001.jpg",
     description: "Journey across the ancient geological wonders of Danakil, the lowest place on Earth. Witness the boiling lava lake of Erta Ale, neon sulfur hot springs of Dallol, and historic Afar salt miner caravans."
   },
@@ -153,7 +177,7 @@ export const tours: Tour[] = [
     duration: "7+",
     durationLabel: "7 Days",
     destination: "Simien Mountains",
-    price: "$950",
+    price: "$2,200",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbuuG6o9Wadb2zxxHDrdQwLZkrNfEQmsrvnAknQ1GyPfTe5RRDos3vJ-A&s=10",
     description: "Discover the UNESCO World Heritage Simien Mountains, known as the 'Roof of Africa'. Trek across dramatic escarpments, spot endemic Gelada baboons, Walia Ibex, and explore centuries of highland settlement history."
   },

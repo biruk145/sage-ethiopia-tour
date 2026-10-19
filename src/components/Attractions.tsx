@@ -13,18 +13,20 @@ export default function Attractions({ attractions, onExplore }: AttractionsProps
     <section id="attractions" className="py-20 bg-emerald-950 text-white relative overflow-hidden scroll-mt-20">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D97706_1px,transparent_1px)] [background-size:16px_16px]"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
           <div>
             <span className="text-amber-400 font-semibold uppercase tracking-widest text-xs">Unforgettable Destinations</span>
             <h2 className="font-serif text-3xl sm:text-5xl font-bold text-amber-50 mt-2">Ethiopian Marvels</h2>
           </div>
-          <p className="text-gray-300 max-w-md mt-4 md:mt-0 text-sm">
-            Explore ancient civilizational roots, extreme volcanic landscapes, and endemic wildlife found nowhere else on earth.
-          </p>
+          <div className="mt-4 md:mt-0">
+            <p className="text-gray-300 max-w-md text-sm">
+              Explore ancient civilizational roots, extreme volcanic landscapes, and endemic wildlife found nowhere else on earth.
+            </p>
+          </div>
         </div>
 
         {/* Attractions Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {attractions.map((attraction, index) => (
             <div 
               key={index} 
