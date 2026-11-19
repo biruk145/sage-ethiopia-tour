@@ -11,20 +11,44 @@ const galleryImages = [
   "./IMG_6244.jpeg"
 ];
 
-export default function Gallery() {
+interface GalleryProps {
+  isOpen?: boolean;
+  onToggle?: () => void;
+}
+
+export default function Gallery({ isOpen = false, onToggle }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <section id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
-      <div className="text-center space-y-3 mb-12">
-        <span className="text-brand-gold font-semibold uppercase tracking-widest text-xs">Capturing Moments</span>
-        <h2 className="font-serif text-3xl sm:text-5xl font-bold text-gray-900">Gallery</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto pt-4">
-          A glimpse into the unforgettable experiences and breathtaking landscapes our guests have enjoyed.
+      <div className="text-center space-y-3 mb-10">
+        <span className="text-brand-gold font-semibold uppercase tracking-widest text-xs">Visual Moments</span>
+        <h2 className="font-serif text-3xl sm:text-5xl font-bold text-gray-900">Captured Journeys</h2>
+        <p className="text-gray-600 max-w-2xl mx-auto pt-3">
+          A glimpse into the stunning terrains, ancient architectural wonders, and authentic human encounters experienced with Sage Ethiopia Tours.
         </p>
+
+        {/* View / Toggle Gallery Button */}
+        {onToggle && (
+          <div className="pt-4">
+            <button
+              onClick={onToggle}
+              className={`inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md cursor-pointer ${
+                isOpen 
+                  ? 'bg-brand-emerald text-white hover:bg-emerald-800' 
+                  : 'bg-brand-gold text-white hover:bg-brand-goldHover'
+              }`}
+            >
+              <i className={`fa-solid ${isOpen ? 'fa-eye-slash' : 'fa-images'}`}></i>
+              <span>{isOpen ? 'Hide Gallery' : 'View Gallery'}</span>
+            </button>
+          </div>
+        )}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+      {/* Gallery Image Grid - shown only when isOpen is true */}
+      {isOpen ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 animate-fadeIn">
         {galleryImages.map((image, index) => (
           <div 
             key={index} 
@@ -42,7 +66,23 @@ export default function Gallery() {
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      ) : (
+        <div 
+          onClick={onToggle}
+          className="border-2 border-dashed border-gray-300 hover:border-brand-gold rounded-2xl p-10 text-center max-w-xl mx-auto cursor-pointer group transition-all duration-300 bg-brand-sand/20 hover:bg-brand-sand/40"
+        >
+          <div className="w-16 h-16 rounded-full bg-brand-sand mx-auto flex items-center justify-center text-brand-emerald group-hover:text-brand-gold group-hover:scale-110 transition-all duration-300 mb-4 shadow-sm">
+            <i className="fa-solid fa-camera-retro text-2xl"></i>
+          </div>
+          <h3 className="font-serif text-lg font-bold text-gray-800 group-hover:text-brand-emerald transition-colors">
+            Click to View Photo Gallery ({galleryImages.length})
+          </h3>
+          <p className="text-gray-500 text-xs mt-1">
+            Tap here or click "Gallery" in the header navigation to reveal the full album.
+          </p>
+        </div>
+      )}
 
       {/* Lightbox Modal */}
       <AnimatePresence>

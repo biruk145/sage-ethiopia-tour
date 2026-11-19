@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { Tour } from '../types';
+import TourDetailModal from './TourDetailModal';
+import addisAbabaEnaImage from '../assets/images/addis_ababa_ena.jpg';
+import ashendaImage from '../assets/images/ashenda_ena.png';
+import mountEntotoFallbackImage from '../assets/images/mount_entoto_park.webp';
+import addisCityTourFallbackImage from '../assets/images/addis_ababa_city_tour.webp';
 
 interface TourPackagesProps {
   tours: Tour[];
@@ -9,6 +14,67 @@ interface TourPackagesProps {
 
 export default function TourPackages({ tours, activeCategory, onCategoryChange }: TourPackagesProps) {
   const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
+  const [showAllTours, setShowAllTours] = useState(false);
+
+  const INITIAL_LIMIT = 6;
+  const initialTours = tours.slice(0, INITIAL_LIMIT);
+  const remainingTours = tours.slice(INITIAL_LIMIT);
+  const hasMore = tours.length > INITIAL_LIMIT;
+
+  const renderTourCard = (tour: Tour) => (
+    <div 
+      key={tour.id} 
+      onClick={() => setSelectedTour(tour)}
+      className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 group flex flex-col h-full transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer"
+    >
+      <div className="relative h-48 sm:h-52 overflow-hidden">
+        <img 
+          src={tour.image} 
+          alt={tour.title} 
+          onError={(e) => {
+            if (tour.category === 'festival' || tour.id === 1) {
+              e.currentTarget.src = ashendaImage;
+            } else if (tour.id === 26) {
+              e.currentTarget.src = mountEntotoFallbackImage;
+            } else if (tour.id === 14) {
+              e.currentTarget.src = addisCityTourFallbackImage;
+            } else {
+              e.currentTarget.src = addisAbabaEnaImage;
+            }
+          }}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+        />
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
+          <h3 className="text-white font-serif text-lg sm:text-xl font-bold leading-tight">{tour.title}</h3>
+        </div>
+      </div>
+      <div className="p-5 flex-grow flex flex-col justify-between">
+        <div>
+          <div className="flex items-center text-xs text-gray-500 mb-3 space-x-4">
+            {tour.durationLabel && (
+              <span className="flex items-center"><i className="fa-regular fa-clock text-brand-gold mr-1"></i> {tour.durationLabel}</span>
+            )}
+            <span className="flex items-center"><i className="fa-solid fa-location-dot text-brand-gold mr-1"></i> {tour.destination}</span>
+          </div>
+          <p 
+            style={{ fontSize: '16px', fontWeight: 'normal' }}
+            className={`text-gray-600 text-base font-normal leading-relaxed ${tour.category === 'festival' || tour.id === 1 ? 'line-clamp-6 text-gray-700' : 'mb-4 line-clamp-3'}`}
+          >
+            {tour.description}
+          </p>
+        </div>
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedTour(tour);
+          }}
+          className="w-full mt-auto bg-brand-sand border border-brand-gold text-brand-goldHover hover:bg-brand-gold hover:text-white py-2 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+        >
+          {tour.category === 'festival' || tour.id === 1 ? 'Read More' : 'View Itinerary'} <i className="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <section id="packages" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
@@ -116,158 +182,100 @@ export default function TourPackages({ tours, activeCategory, onCategoryChange }
         </div>
       </div>
 
-      {/* Tour Cards Grid */}
+      {/* Initial 6 Tour Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {tours.length > 0 ? (
-          tours.map(tour => (
-            <div 
-              key={tour.id} 
-              onClick={() => setSelectedTour(tour)}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 group flex flex-col h-full transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer"
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img src={tour.image} alt={tour.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                {tour.price && (
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand-emerald shadow-sm">
-                    {tour.price}
-                  </div>
-                )}
-                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
-                  <h3 className="text-white font-serif text-xl font-bold">{tour.title}</h3>
-                </div>
-              </div>
-              <div className="p-5 flex-grow flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center text-xs text-gray-500 mb-3 space-x-4">
-                    {tour.durationLabel && (
-                      <span className="flex items-center"><i className="fa-regular fa-clock text-brand-gold mr-1"></i> {tour.durationLabel}</span>
-                    )}
-                    <span className="flex items-center"><i className="fa-solid fa-location-dot text-brand-gold mr-1"></i> {tour.destination}</span>
-                  </div>
-                  <p 
-                    style={{ fontSize: '16px', fontWeight: 'normal' }}
-                    className={`text-gray-600 text-base font-normal leading-relaxed ${tour.category === 'festival' || tour.id === 1 ? 'line-clamp-6 text-gray-700' : 'mb-4 line-clamp-3'}`}
-                  >
-                    {tour.description}
-                  </p>
-                </div>
-                <button 
-                  onClick={() => setSelectedTour(tour)}
-                  className="w-full mt-auto bg-brand-sand border border-brand-gold text-brand-goldHover hover:bg-brand-gold hover:text-white py-2 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
-                >
-                  {tour.category === 'festival' || tour.id === 1 ? 'Read More' : 'View Itinerary'} <i className="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-              </div>
-            </div>
-          ))
+        {initialTours.length > 0 ? (
+          initialTours.map(tour => renderTourCard(tour))
         ) : (
-          <div className="col-span-full text-center py-12">
-            <p className="text-gray-500 text-lg">No tours found matching your search criteria. Please try again.</p>
+          <div className="col-span-full text-center py-12 px-4 bg-gray-50/80 rounded-3xl border border-gray-100 max-w-lg mx-auto shadow-sm">
+            <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-amber-50 text-brand-gold flex items-center justify-center text-2xl shadow-sm">
+              <i className="fa-solid fa-compass"></i>
+            </div>
+            <h3 className="font-serif text-lg font-bold text-gray-900 mb-1">No tours found matching this filter</h3>
+            <p className="text-gray-500 text-sm mb-5">
+              Explore other durations or view all our handcrafted Ethiopian adventures.
+            </p>
+            <button
+              onClick={() => onCategoryChange('all')}
+              className="px-6 py-2.5 bg-brand-emerald hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer"
+            >
+              <i className="fa-solid fa-rotate-left"></i>
+              <span>Show All Tours</span>
+            </button>
           </div>
         )}
       </div>
 
-      {/* Tour Detail Modal */}
-      {selectedTour && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 opacity-100 transition-opacity">
-          <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm" 
-            onClick={() => setSelectedTour(null)}
-          ></div>
-          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto z-10 flex flex-col md:flex-row transform transition-transform">
-            <button 
-              onClick={() => setSelectedTour(null)}
-              className="absolute top-4 right-4 z-20 bg-white/80 backdrop-blur text-gray-800 hover:text-brand-emerald w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow"
+      {/* More Tours Button */}
+      {hasMore && (
+        <div className="mt-12 text-center">
+          <button
+            onClick={() => {
+              const nextState = !showAllTours;
+              setShowAllTours(nextState);
+              if (!nextState) {
+                document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-brand-emerald hover:bg-emerald-800 text-white font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 group cursor-pointer"
+          >
+            <span>{showAllTours ? 'Show Less Tours' : `More Tours (${remainingTours.length} More)`}</span>
+            <i className={`fa-solid ${showAllTours ? 'fa-chevron-up' : 'fa-arrow-down'} text-sm text-brand-gold transition-transform group-hover:scale-110`}></i>
+          </button>
+        </div>
+      )}
+
+      {/* More Tours Section */}
+      {hasMore && showAllTours && (
+        <div className="mt-14 pt-12 border-t border-gray-200/80 animate-fadeIn" id="more-tours-section">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 pb-3 border-b border-gray-100">
+            <div>
+              <span className="text-brand-gold font-semibold uppercase tracking-widest text-xs">Complete Collection</span>
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mt-1">
+                More Tours ({remainingTours.length})
+              </h3>
+            </div>
+            <p className="text-gray-500 text-sm mt-2 sm:mt-0">
+              Discover all of our authentic journeys & historical expeditions across Ethiopia
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {remainingTours.map(tour => renderTourCard(tour))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => {
+                setShowAllTours(false);
+                document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm transition-colors cursor-pointer"
             >
-              <i className="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-chevron-up text-xs"></i>
+              <span>Show Less Tours</span>
             </button>
-            
-            {/* Image side */}
-            <div className="md:w-[45%] relative h-64 md:h-auto min-h-[300px]">
-              <img src={selectedTour.image} alt={selectedTour.title} className="absolute inset-0 w-full h-full object-cover" />
-              {selectedTour.price && (
-                <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold text-brand-emerald shadow-sm">
-                  {selectedTour.price}
-                </div>
-              )}
-            </div>
-            
-            {/* Content side */}
-            <div className="md:w-[55%] p-6 md:p-8 flex flex-col bg-white">
-              <span className="text-brand-gold font-semibold uppercase tracking-widest text-xs mb-2">
-                {selectedTour.category === 'daytour' || selectedTour.category === 'fullday' || selectedTour.category === 'halfday' 
-                  ? 'Addis Ababa City Tour' 
-                  : selectedTour.category === 'historical' 
-                    ? 'Historical Circuit' 
-                    : selectedTour.category === 'cultural' 
-                      ? 'Cultural Tour' 
-                      : selectedTour.category === 'festival' 
-                        ? 'Festival Experience' 
-                        : 'Adventure'}
-              </span>
-              <h3 className="font-serif text-3xl font-bold text-gray-900 mb-4">{selectedTour.title}</h3>
-              
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6 pb-6 border-b border-gray-100">
-                {selectedTour.durationLabel && (
-                  <span className="flex items-center bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                    <i className="fa-regular fa-clock text-brand-gold mr-2"></i> {selectedTour.durationLabel}
-                  </span>
-                )}
-                <span className="flex items-center bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                  <i className="fa-solid fa-location-dot text-brand-gold mr-2"></i> {selectedTour.destination}
-                </span>
-              </div>
-              
-              <div className="prose prose-sm text-gray-600 mb-8 flex-grow">
-                <h4 className="text-lg font-bold text-gray-900 mb-3 font-serif">Overview</h4>
-                <p className="leading-relaxed text-base whitespace-pre-line">{selectedTour.description}</p>
-                
-                {selectedTour.id !== 1 && (
-                  <div className="mt-8 bg-brand-sand/30 p-5 rounded-xl border border-brand-gold/20">
-                    <h4 className="font-bold text-brand-emerald mb-3 flex items-center gap-2">
-                      <i className="fa-solid fa-clipboard-check text-brand-gold"></i> Included in this package
-                    </h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-                      <li className="flex items-center"><i className="fa-solid fa-check text-brand-emerald mr-2"></i> Expert local guide</li>
-                      <li className="flex items-center"><i className="fa-solid fa-check text-brand-emerald mr-2"></i> Private or group transportation</li>
-                      <li className="flex items-center"><i className="fa-solid fa-check text-brand-emerald mr-2"></i> Entrance fees</li>
-                      <li className="flex items-center"><i className="fa-solid fa-check text-brand-emerald mr-2"></i> Authentic experiences</li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-              
-              <div className="mt-auto flex gap-4 pt-4">
-                <button 
-                  onClick={() => setSelectedTour(null)}
-                  className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 py-3 rounded-lg font-semibold transition-colors"
-                >
-                  Close
-                </button>
-                <a 
-                  href="#booking"
-                  onClick={() => {
-                    setSelectedTour(null);
-                    setTimeout(() => {
-                      // Automatically select the tour in the dropdown if we can
-                      const tourSelect = document.getElementById('tour') as HTMLSelectElement;
-                      if (tourSelect) {
-                        tourSelect.value = selectedTour.title;
-                        // Dispatch change event for React to pick it up
-                        const event = new Event('change', { bubbles: true });
-                        tourSelect.dispatchEvent(event);
-                      }
-                    }, 100);
-                  }}
-                  className="flex-[2] bg-brand-emerald hover:bg-emerald-700 text-white py-3 rounded-lg font-semibold transition-colors shadow-md flex items-center justify-center gap-2"
-                >
-                  <i className="fa-regular fa-calendar-check"></i> Request Booking
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       )}
+
+      {/* Tour Detail Modal Component */}
+      <TourDetailModal
+        tour={selectedTour}
+        onClose={() => setSelectedTour(null)}
+        onBookNow={(tour) => {
+          setSelectedTour(null);
+          setTimeout(() => {
+            const tourSelect = document.getElementById('tour') as HTMLSelectElement;
+            if (tourSelect) {
+              tourSelect.value = tour.title;
+              const event = new Event('change', { bubbles: true });
+              tourSelect.dispatchEvent(event);
+            }
+            document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }}
+      />
     </section>
   );
 }

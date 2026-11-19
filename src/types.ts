@@ -1,3 +1,9 @@
+export interface TourItineraryDay {
+  day: number | string;
+  title: string;
+  description: string;
+}
+
 export interface Tour {
   id: number;
   title: string;
@@ -8,6 +14,13 @@ export interface Tour {
   price: string;
   image: string;
   description: string;
+  itinerary?: TourItineraryDay[];
+  inclusions?: string[];
+  exclusions?: string[];
+  bestSeason?: string;
+  groupType?: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface Attraction {

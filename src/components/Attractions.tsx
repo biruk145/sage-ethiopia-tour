@@ -16,7 +16,7 @@ export default function Attractions({ attractions, onExplore }: AttractionsProps
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
           <div>
             <span className="text-amber-400 font-semibold uppercase tracking-widest text-xs">Unforgettable Destinations</span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-amber-50 mt-2">Ethiopian Marvels</h2>
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-amber-50 mt-2">Ethiopia's Top Attractions</h2>
           </div>
           <div className="mt-4 md:mt-0">
             <p className="text-gray-300 max-w-md text-sm">
@@ -154,7 +154,7 @@ export default function Attractions({ attractions, onExplore }: AttractionsProps
                 </button>
                 <button 
                   onClick={() => setSelectedAttraction(null)}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold text-xs sm:text-sm transition-colors text-center"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-700 font-semibold text-xs sm:text-sm transition-colors text-center cursor-pointer"
                 >
                   Close
                 </button>

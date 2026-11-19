@@ -106,25 +106,24 @@ export default function BookingSection() {
           {/* Info Side */}
           <div className="md:w-[38%] bg-brand-emerald text-white p-8 md:p-10 flex flex-col justify-between">
             <div>
-              <span className="text-amber-300 font-semibold uppercase tracking-widest text-xs mb-3 block">Plan Your Journey</span>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">Book Your Adventure</h2>
+              <span className="text-amber-300 font-semibold uppercase tracking-widest text-xs mb-3 block">Direct Reservation</span>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">Book Your Ethiopian Journey</h2>
               <p className="text-emerald-100 mb-6 text-sm leading-relaxed">
-                Ready to explore the wonders of Ethiopia? Fill out the form, and our travel team will get back to you within 24 hours to confirm your itinerary and custom travel details.
+                Reserve your spot now with no upfront fees. Pay upon arrival in Ethiopia.
               </p>
 
-              {estimatedAmount > 0 && (
-                <div className="bg-emerald-900/60 border border-emerald-600/60 rounded-xl p-4 mb-6">
-                  <div className="text-[11px] uppercase tracking-wider text-emerald-300 font-medium mb-1">
-                    Estimated Booking Total
-                  </div>
-                  <div className="text-2xl font-bold text-amber-300 font-serif">
-                    ${estimatedAmount.toLocaleString()} USD
-                  </div>
-                  <div className="text-xs text-emerald-200 mt-1">
-                    {formData.guests} {parseInt(formData.guests) === 1 ? 'Guest' : 'Guests'} &bull; {selectedTour?.price || '$0'} each
-                  </div>
+              <div className="bg-emerald-900/60 border border-emerald-600/60 rounded-xl p-4 mb-6">
+                <div className="text-[11px] uppercase tracking-wider text-amber-300 font-semibold mb-1 flex items-center gap-1.5">
+                  <i className="fa-solid fa-handshake-simple text-xs"></i>
+                  <span>No Upfront Payment</span>
                 </div>
-              )}
+                <div className="text-xl font-bold text-white font-serif">
+                  Custom Quote on Request
+                </div>
+                <p className="text-xs text-emerald-200/90 mt-1">
+                  Personalized itinerary planning with flexible dates and zero deposit required.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-4 text-sm text-emerald-50 pt-6 border-t border-emerald-800/60">
@@ -210,7 +209,7 @@ export default function BookingSection() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone / WhatsApp Number</label>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                     <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-emerald focus:border-brand-emerald outline-none transition-all" placeholder="+251 9... / +1 (555)..." />
                   </div>
                   <div>
@@ -225,23 +224,40 @@ export default function BookingSection() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="tour" className="block text-sm font-medium text-gray-700 mb-1">Tour Package *</label>
+                    <label htmlFor="tour" className="block text-sm font-medium text-gray-700 mb-1">Select Tour Package *</label>
                     <select id="tour" name="tour" required value={formData.tour} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-emerald focus:border-brand-emerald outline-none transition-all bg-white">
-                      <option value="">-- Select a Tour --</option>
+                      <option value="">-- Select Tour Package --</option>
                       {tours.map(tour => (
-                        <option key={tour.id} value={tour.title}>{tour.title} ({tour.price})</option>
+                        <option key={tour.id} value={tour.title}>{tour.title}</option>
                       ))}
                       <option value="Custom">Custom / Not Sure</option>
                     </select>
                   </div>
                   <div>
                     <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">Preferred Date *</label>
-                    <input type="date" id="date" name="date" required value={formData.date} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-emerald focus:border-brand-emerald outline-none transition-all" />
+                    <input
+                      type="date"
+                      id="date"
+                      name="date"
+                      required
+                      value={formData.date}
+                      onFocus={() => {
+                        if (!formData.date) {
+                          const now = new Date();
+                          const yyyy = now.getFullYear();
+                          const mm = String(now.getMonth() + 1).padStart(2, '0');
+                          const dd = String(now.getDate()).padStart(2, '0');
+                          setFormData(prev => ({ ...prev, date: `${yyyy}-${mm}-${dd}` }));
+                        }
+                      }}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-emerald focus:border-brand-emerald outline-none transition-all"
+                    />
                   </div>
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Additional Requirements or Special Notes</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Special Inquiries / Notes</label>
                   <textarea id="message" name="message" rows={3} value={formData.message} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-emerald focus:border-brand-emerald outline-none transition-all resize-none" placeholder="Dietary needs, airport pick-up, private vehicle request..." />
                 </div>
                 
@@ -258,13 +274,11 @@ export default function BookingSection() {
                   className="w-full bg-brand-gold hover:bg-brand-goldHover text-white py-3 rounded-lg font-bold transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed mt-2"
                 >
                   {isSubmitting ? (
-                    <><i className="fa-solid fa-circle-notch fa-spin"></i> Sending Request & Email Notification...</>
+                    <><i className="fa-solid fa-circle-notch fa-spin"></i> Submitting...</>
                   ) : (
                     <>
                       <i className="fa-regular fa-calendar-check"></i>
-                      <span>
-                        Submit Booking Request {estimatedAmount > 0 ? `($${estimatedAmount.toLocaleString()} USD)` : ''}
-                      </span>
+                      <span>Confirm Booking Request</span>
                     </>
                   )}
                 </button>

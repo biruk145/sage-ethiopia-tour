@@ -9,12 +9,12 @@ export default function About() {
       <div className="space-y-6">
         {/* Header */}
         <div className="text-center sm:text-left">
-          <span className="text-brand-gold font-semibold uppercase tracking-widest text-xs">About Us</span>
+          <span className="text-brand-gold font-semibold uppercase tracking-widest text-xs">Authentic Ethiopian Journeys</span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-brand-emerald leading-tight mt-1">
-            Welcome to Sage Ethiopia Tour and Travel
+            Welcome to Sage Ethiopia Tours
           </h2>
           <p className="text-amber-800/80 font-medium text-sm sm:text-base mt-1">
-            Your trusted local tour partner in Ethiopia.
+            Your Trusted Travel Partner in the Land of Origins
           </p>
         </div>
 

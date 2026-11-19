@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 interface HeaderProps {
   onNavigateToCategory?: (category: string) => void;
+  onOpenGallery?: () => void;
+  onOpenFeaturedModal?: () => void;
 }
 
-export default function Header({ onNavigateToCategory }: HeaderProps) {
+export default function Header({ onNavigateToCategory, onOpenGallery, onOpenFeaturedModal }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -26,9 +28,9 @@ export default function Header({ onNavigateToCategory }: HeaderProps) {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}
       id="main-header"
     >
-      <nav className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between text-white rounded-b-2xl transition-all ${isScrolled ? 'glass-nav shadow-xl mt-0' : 'bg-transparent mt-0 sm:mt-2'}`}>
+      <nav className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between text-white rounded-b-2xl transition-all ${isScrolled ? 'glass-nav shadow-xl mt-0' : 'bg-emerald-950/80 backdrop-blur-md border border-emerald-800/40 mt-0 sm:mt-2'}`}>
         {/* Brand Logo */}
-        <a href="#home" className="flex items-center space-x-3 group">
+        <a href="#featured-day-trips" className="flex items-center space-x-3 group">
           <div className="w-10 h-10 rounded-full bg-brand-gold flex items-center justify-center text-white text-xl font-bold font-serif shadow-md group-hover:scale-105 transition-transform">
             S
           </div>
@@ -38,17 +40,33 @@ export default function Header({ onNavigateToCategory }: HeaderProps) {
         </a>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center space-x-8 font-medium text-sm">
-          <a href="#home" className="hover:text-amber-300 hover:scale-110 inline-block transition-all duration-300 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all">Home</a>
-          
+        <div className="hidden md:flex items-center space-x-7 font-medium text-sm">
+          <button
+            onClick={() => onOpenFeaturedModal?.()}
+            className="hover:text-amber-300 hover:scale-105 inline-flex items-center gap-1.5 transition-all duration-300 py-1 relative text-amber-200 cursor-pointer font-semibold text-sm after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-400 hover:after:w-full after:transition-all"
+            title="View Featured Day Trips Showcase"
+          >
+            <span className="text-amber-400 text-xs">✦</span>
+            <span>Day Trips</span>
+          </button>
+
           <div className="relative group hover:scale-110 transition-all duration-300">
             <a href="#packages" className="hover:text-amber-300 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all flex items-center gap-1 cursor-pointer">
               Tour Packages <i className="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
             </a>
             
             {/* Dropdown Menu */}
-            <div className="absolute top-full left-0 pt-4 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top -translate-y-2 group-hover:translate-y-0 z-50">
+            <div className="absolute top-full left-0 pt-4 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top -translate-y-2 group-hover:translate-y-0 z-50">
               <div className="bg-emerald-950/95 backdrop-blur-md border border-emerald-800/50 rounded-xl shadow-xl overflow-visible py-1 flex flex-col scale-90 origin-top-left">
+                {/* 0. Featured Day Trips Showcase Trigger */}
+                <button 
+                  onClick={() => onOpenFeaturedModal?.()} 
+                  className="w-full text-left px-4 py-2.5 text-amber-300 hover:bg-emerald-800 hover:text-amber-200 transition-all duration-300 text-sm flex items-center gap-2 border-b border-emerald-800/40 font-semibold"
+                >
+                  <span className="text-amber-400 text-xs">✦</span>
+                  <span>Featured Day Trips</span>
+                </button>
+
                 {/* 1. Nested Dropdown for Addis Ababa City Tour */}
                 <div className="relative group/nested">
                   <button onClick={() => onNavigateToCategory?.('daytour')} className="w-full text-left px-4 py-2.5 text-gray-200 hover:bg-emerald-800 hover:text-amber-300 transition-all duration-300 text-sm flex justify-between items-center group-hover/nested:bg-emerald-800 group-hover/nested:text-amber-300 border-b border-emerald-800/30">
@@ -73,7 +91,13 @@ export default function Header({ onNavigateToCategory }: HeaderProps) {
           </div>
 
           <a href="#attractions" className="hover:text-amber-300 hover:scale-110 inline-block transition-all duration-300 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all">Attractions</a>
-          <a href="#gallery" className="hover:text-amber-300 hover:scale-110 inline-block transition-all duration-300 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all">Gallery</a>
+          <a 
+            href="#gallery" 
+            onClick={() => onOpenGallery?.()}
+            className="hover:text-amber-300 hover:scale-110 inline-block transition-all duration-300 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all"
+          >
+            Gallery
+          </a>
           <a href="#about" className="hover:text-amber-300 hover:scale-110 inline-block transition-all duration-300 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all">About Sage</a>
           <a href="#contact" className="hover:text-amber-300 hover:scale-110 inline-block transition-all duration-300 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all">Contact Us</a>
         </div>
@@ -88,7 +112,7 @@ export default function Header({ onNavigateToCategory }: HeaderProps) {
         {/* Mobile Menu Toggle Button */}
         <button 
           onClick={() => setIsMobileMenuOpen(true)}
-          className="md:hidden text-white focus:outline-none p-2 rounded-lg hover:bg-emerald-800 transition-colors" 
+          className="md:hidden text-white focus:outline-none p-2 rounded-lg hover:bg-emerald-800 transition-colors cursor-pointer" 
           aria-label="Toggle Navigation"
         >
           <i className="fa-solid fa-bars text-2xl"></i>
@@ -119,9 +143,28 @@ export default function Header({ onNavigateToCategory }: HeaderProps) {
           </div>
           <div className="mt-8 flex flex-col space-y-4 text-base font-medium">
             <a href="#home" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-amber-300 transition-colors">Home</a>
+            <button 
+              onClick={() => {
+                onOpenFeaturedModal?.();
+                setIsMobileMenuOpen(false);
+              }}
+              className="hover:text-amber-300 transition-colors text-left flex items-center gap-2 text-amber-300 font-semibold"
+            >
+              <span>✦</span>
+              <span>Featured Day Trips</span>
+            </button>
             <a href="#packages" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-amber-300 transition-colors">Tour Packages</a>
             <a href="#attractions" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-amber-300 transition-colors">Attractions</a>
-            <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-amber-300 transition-colors">Gallery</a>
+            <a 
+              href="#gallery" 
+              onClick={() => {
+                onOpenGallery?.();
+                setIsMobileMenuOpen(false);
+              }} 
+              className="hover:text-amber-300 transition-colors"
+            >
+              Gallery
+            </a>
             <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-amber-300 transition-colors">About Sage</a>
             <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-amber-300 transition-colors">Contact Us</a>
           </div>

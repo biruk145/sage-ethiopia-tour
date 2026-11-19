@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
   const recipientEmail = "birukshimels17@gmail.com";
   const emailSubject = encodeURIComponent("Inquiry - Sage Ethiopia Tours");
   const emailBody = encodeURIComponent(
@@ -24,32 +19,13 @@ export default function Footer() {
     }
   };
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    
-    setIsSubmitting(true);
-    setErrorMessage('');
-    
-    try {
-      await new Promise(resolve => setTimeout(resolve, 400));
-      setIsSuccess(true);
-      setEmail('');
-    } catch (error) {
-      console.error("Error subscribing: ", error);
-      setErrorMessage('Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <footer id="contact" className="bg-brand-earth text-white pt-16 pb-8 border-t-4 border-brand-gold relative overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiLz48L3N2Zz4=')]"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           
           {/* Brand Col */}
           <div className="space-y-4">
@@ -58,11 +34,11 @@ export default function Footer() {
                 S
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-2xl font-bold tracking-wide text-amber-100">Sage Tours</span>
+                <span className="font-serif text-2xl font-bold tracking-wide text-amber-100">SAGE ETHIOPIA TOUR</span>
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed pr-4">
-              Your trusted partner for authentic, unforgettable experiences across the diverse landscapes and cultures of Ethiopia.
+              Your trusted travel partner in the Land of Origins. Experiencing Ethiopia authentically since 2018.
             </p>
             <div className="flex space-x-4 pt-2">
               <a href="#" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-gold hover:text-white transition-colors text-gray-300">
@@ -89,9 +65,8 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-400">
               <li><a href="#home" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>Home</a></li>
               <li><a href="#packages" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>Tour Packages</a></li>
-              <li><a href="#attractions" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>Top Attractions</a></li>
-              <li><a href="#about" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>About Us</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>Travel Guide</a></li>
+              <li><a href="#attractions" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>Attractions</a></li>
+              <li><a href="#about" className="hover:text-amber-400 transition-colors"><i className="fa-solid fa-angle-right text-[10px] mr-2"></i>About Sage</a></li>
             </ul>
           </div>
 
@@ -136,50 +111,6 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h4 className="font-serif text-lg font-bold text-white mb-4 relative inline-block">
-              Newsletter
-              <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-brand-gold"></span>
-            </h4>
-            <p className="text-gray-400 text-sm mb-4">Subscribe to our newsletter for seasonal travel updates and special offers.</p>
-            {isSuccess ? (
-              <div className="bg-emerald-900/50 border border-emerald-500 rounded-xl p-4 text-sm text-emerald-200">
-                <div className="flex items-center gap-2 mb-1">
-                  <i className="fa-solid fa-circle-check text-emerald-400"></i>
-                  <span className="font-semibold text-white">Subscribed!</span>
-                </div>
-                <p className="text-xs text-emerald-300">Thank you for subscribing to Sage Tours travel updates.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col space-y-2">
-                <input 
-                  type="email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address" 
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-sm text-white focus:outline-none focus:border-brand-gold disabled:opacity-50"
-                  required
-                  disabled={isSubmitting}
-                />
-                {errorMessage && (
-                  <p className="text-red-400 text-xs px-1">{errorMessage}</p>
-                )}
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="w-full bg-brand-gold hover:bg-brand-goldHover text-white py-2 rounded font-semibold text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <><i className="fa-solid fa-circle-notch fa-spin"></i> Subscribing...</>
-                  ) : (
-                    'Subscribe'
-                  )}
-                </button>
-              </form>
-            )}
           </div>
         </div>
 
